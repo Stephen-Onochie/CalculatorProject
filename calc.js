@@ -18,6 +18,28 @@ class Calculator {
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
 
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.appendNumber(button.innerText);
+        calculator.updateDisplay();
+    })
+});
+
+equalsButton.addEventListener('click', button => {
+    calculator.compute();
+    calculator.updateDisplay();
+});
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear();
+    calculator.updateDisplay();
+});
+
+deleteButton.addEventListener('click', button => {
+    calculator.deleteNum();
+    calculator.updateDisplay();
+});
+
 function clear() {
     this.currentOperand = ' ';
     this.previousOperand = ' ';
@@ -25,7 +47,7 @@ function clear() {
 };
 
 function deleteNum() {
-
+    this.currentOperand = this.currentOperand.toString().slice(0, -1);
 };
 
 function appendNumber(number) {
@@ -74,16 +96,13 @@ function compute() {
 
 function updateDisplay() {
     this.currentOperandTextElement.innerText = this.currentOperand;
+    if (this.operation != null) {
+        this.previousOperandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
+    } else {
+        this.previousOperandTextElement.innerText = '';
+    }
 };
 
-numberButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        calculator.appendNumber(button.innerText);
-        calculator.updateDisplay();
-    })
-});
-
-equalsButton.addEventListener('click', button => {
-    calculator.compute();
-    calculator.updateDisplay();
-});
+function getDisplayNumber(number) {
+    
+}
